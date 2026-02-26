@@ -1,9 +1,14 @@
 {
+  "description": "PR demo recorder hooks",
   "hooks": {
     "Stop": [
       {
-        "type": "command",
-        "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/stop-trigger.sh"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/stop-trigger.sh"
+          }
+        ]
       }
     ]
   }

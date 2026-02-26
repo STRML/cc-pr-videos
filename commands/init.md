@@ -1,7 +1,5 @@
 ---
-name: init
-description: Set up PR demo recording for the current project. Creates .claude/demo.json config and adds the sentinel file instruction to CLAUDE.md.
-user_invocable: true
+description: "Set up PR demo recording for the current project"
 ---
 
 # PR Demo Video Setup
@@ -30,21 +28,17 @@ Set up automatic PR demo recording for this project.
 - `browserState`: Path to save/load browser cookies between recordings
 - `hints`: Free-text hints for the recorder (e.g. "The new feature is at /settings/billing")
 
-2. **Add the sentinel file instruction** to the project's `.claude/CLAUDE.md` (create if it doesn't exist). Append this section if not already present:
+2. **Add the sentinel file instruction** to the project's `.claude/CLAUDE.md` (create if it doesn't exist). Append this block if a "PR Demo Recording" section is not already present:
 
-```markdown
-## PR Demo Recording
+    ## PR Demo Recording
 
-After any `gh pr create` succeeds and you have the PR URL, write it to a sentinel file:
+    After any `gh pr create` succeeds and you have the PR URL, write it to a sentinel file:
 
-```bash
-echo "$PR_URL" > /tmp/claude/pr-demo-pending
-```
+        echo "$PR_URL" > /tmp/claude/pr-demo-pending
 
-Then tell the user: "PR demo queued — will record to ~/Desktop/pr-demo-<N>.webm after this response."
+    Then tell the user: "PR demo queued — will record to ~/Desktop/pr-demo-<N>.webm after this response."
 
-A Stop hook picks up the sentinel and launches the recorder outside the sandbox.
-```
+    A Stop hook picks up the sentinel and launches the recorder outside the sandbox.
 
 3. **Add `.claude/demo-browser-state.json` and `.claude/demo-feedback.log` to `.gitignore`** (they contain credentials/session data).
 
