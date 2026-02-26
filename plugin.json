@@ -1,0 +1,12 @@
+{
+  "name": "cc-pr-videos",
+  "version": "0.1.0",
+  "description": "Automatically record browser demo videos of pull requests using agent-browser",
+  "author": {
+    "name": "Samuel Reed",
+    "url": "https://github.com/STRML"
+  },
+  "repository": "https://github.com/STRML/cc-pr-videos",
+  "license": "MIT",
+  "keywords": ["pr", "demo", "video", "browser", "agent-browser", "recording"]
+}
