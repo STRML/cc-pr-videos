@@ -4,6 +4,10 @@
   "owner": {
     "name": "STRML"
   },
+  "metadata": {
+    "description": "Automatic PR demo video recording for Claude Code using agent-browser",
+    "version": "0.1.0"
+  },
   "plugins": [
     {
       "name": "cc-pr-videos",
