@@ -17,11 +17,14 @@ When you run `gh pr create`, a background process analyzes your PR, opens the ru
 
 ## Install
 
+Add the marketplace, then install the plugin (project-scope recommended):
+
 ```bash
-claude plugin add cc-pr-videos --source https://github.com/STRML/cc-pr-videos
+claude plugin marketplace add https://github.com/STRML/cc-pr-videos
+claude plugin install cc-pr-videos --scope project
 ```
 
-Then in each project you want to use it:
+Then run the init command to configure your project:
 
 ```
 /pr-videos:init
