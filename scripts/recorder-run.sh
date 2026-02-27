@@ -9,7 +9,6 @@ CWD="${2:-$HOME}"
 [[ -z "$PR_URL" ]] && exit 1
 
 PR_NUM=$(echo "$PR_URL" | grep -oE '[0-9]+$')
-OUTPUT="$HOME/Desktop/pr-demo-${PR_NUM}.webm"
 
 mkdir -p /tmp/claude
 
@@ -32,6 +31,12 @@ done
 
 cd "$CWD"
 
+# Derive repo name and topic slug for output filename
+REPO_NAME=$(basename "$CWD" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g; s/^-//; s/-$//')
+TOPIC_SLUG=$(echo "$PR_TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 ]/ /g' | tr -s ' ' '-' | sed 's/^-//; s/-$//' | cut -c1-40 | sed 's/-$//')
+OUTPUT="$CWD/.claude/videos/pr-${PR_NUM}-${REPO_NAME}-${TOPIC_SLUG}.webm"
+mkdir -p "$CWD/.claude/videos"
+
 # Read project demo config if it exists
 DEMO_CONFIG=""
 DEMO_AUTH=""
@@ -44,6 +49,12 @@ if [[ -f .claude/demo.json ]]; then
   DEMO_HINTS=$(echo "$DEMO_CONFIG" | jq -r '.hints // ""' 2>/dev/null || echo "")
   DEMO_STATE=$(echo "$DEMO_CONFIG" | jq -r '.browserState // ""' 2>/dev/null || echo "")
   DEMO_FEEDBACK=$(echo "$DEMO_CONFIG" | jq -r '.feedbackFile // ""' 2>/dev/null || echo "")
+  DEMO_OUTPUT_DIR=$(echo "$DEMO_CONFIG" | jq -r '.outputDir // ""' 2>/dev/null || echo "")
+  # Override output dir if config specifies one
+  if [[ -n "$DEMO_OUTPUT_DIR" ]]; then
+    OUTPUT="${DEMO_OUTPUT_DIR}/pr-${PR_NUM}-${REPO_NAME}-${TOPIC_SLUG}.webm"
+    mkdir -p "$DEMO_OUTPUT_DIR"
+  fi
   # Override dev server URL if config specifies one
   CONFIG_URL=$(echo "$DEMO_CONFIG" | jq -r '.baseUrl // ""' 2>/dev/null || echo "")
   [[ -n "$CONFIG_URL" ]] && DEV_URL="$CONFIG_URL"
@@ -128,5 +139,5 @@ fi
 
 STATUS=$?
 if [[ -f "$OUTPUT" ]]; then
-  osascript -e "display notification \"Saved: pr-demo-${PR_NUM}.webm\" with title \"PR Demo Ready\" subtitle \"${PR_TITLE}\""
+  osascript -e "display notification \"Saved: $(basename "$OUTPUT")\" with title \"PR Demo Ready\" subtitle \"${PR_TITLE}\""
 fi

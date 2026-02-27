@@ -19,6 +19,7 @@ Set up automatic PR demo recording for this project.
     "password": ""
   },
   "browserState": ".claude/demo-browser-state.json",
+  "outputDir": ".claude/videos",
   "hints": ""
 }
 ```
@@ -26,6 +27,7 @@ Set up automatic PR demo recording for this project.
 - `baseUrl`: The dev server URL (probe ports 3000, 3001, 5173, 5174, 8080 to suggest one)
 - `auth`: Login credentials for the app. Omit the entire `auth` key if no login is needed.
 - `browserState`: Path to save/load browser cookies between recordings
+- `outputDir`: Where to save recordings (default: `.claude/videos`). Videos are named `pr-{num}-{repo}-{topic}.webm`.
 - `hints`: Free-text hints for the recorder (e.g. "The new feature is at /settings/billing")
 
 2. **Add the sentinel file instruction** to the project's `.claude/CLAUDE.md` (create if it doesn't exist). Append this block if a "PR Demo Recording" section is not already present:
@@ -40,6 +42,9 @@ Set up automatic PR demo recording for this project.
 
     A Stop hook picks up the sentinel and launches the recorder outside the sandbox.
 
-3. **Add `.claude/demo-browser-state.json` and `.claude/demo-feedback.log` to `.gitignore`** (they contain credentials/session data).
+3. **Add these entries to `.gitignore`** (they contain credentials, session data, or generated files):
+   - `.claude/demo-browser-state.json`
+   - `.claude/demo-feedback.log`
+   - `.claude/videos/`
 
 4. Tell the user the setup is complete and they can test by creating a PR in this project.
