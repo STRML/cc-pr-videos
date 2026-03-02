@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Automatic PR demo video recording for Claude Code using agent-browser",
-    "version": "0.2.0"
+    "version": "0.2.1"
   },
   "plugins": [
     {
       "name": "cc-pr-videos",
       "description": "Automatically record browser demo videos of pull requests using agent-browser",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "source": "./",
       "author": {
         "name": "Samuel Reed"

@@ -1,6 +1,6 @@
 {
   "name": "cc-pr-videos",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Automatically record browser demo videos of pull requests using agent-browser",
   "author": {
     "name": "Samuel Reed",
