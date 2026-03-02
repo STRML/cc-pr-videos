@@ -42,6 +42,20 @@ Set up automatic PR demo recording for this project.
 
     A Stop hook picks up the sentinel and launches the recorder outside the sandbox.
 
+    ### Embedding the recording in the PR
+
+    GitHub strips `<video>` tags from PR descriptions. To embed the demo as an auto-playing preview, convert to GIF and use `![]()` markdown:
+
+        # Convert to GIF (720px wide, 10fps, palette-optimized)
+        ffmpeg -y -i ~/Desktop/pr-demo-<N>.webm \
+          -vf "fps=10,scale=720:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128[p];[s1][p]paletteuse=dither=bayer" \
+          -loop 0 /tmp/pr-demo.gif
+
+        # Upload to catbox.moe and get a URL
+        curl -s -F "reqtype=fileupload" -F "fileToUpload=@/tmp/pr-demo.gif" https://catbox.moe/user/api.php
+
+        # Paste the returned URL into the PR body as: ![Demo](https://files.catbox.moe/abc123.gif)
+
 3. **Add these entries to `.gitignore`** (they contain credentials, session data, or generated files):
    - `.claude/demo-browser-state.json`
    - `.claude/demo-feedback.log`
