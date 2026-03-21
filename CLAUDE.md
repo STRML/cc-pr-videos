@@ -8,7 +8,7 @@ When `gh pr create` succeeds and the PR URL is written to a sentinel file, a Sto
 1. Gathers PR context via `gh pr view`
 2. Probes common dev server ports (3000, 3001, 5173, 5174, 4173, 8080, 8000, 4200)
 3. Spawns a nested `claude --print` session using the `agent-browser` CLI to record a `.webm` demo
-4. Fires a macOS notification when the recording is saved to `~/Desktop/pr-demo-<N>.webm`
+4. Fires a macOS notification when the recording is saved to `.tmp/pr-videos/`
 
 ## Project structure
 

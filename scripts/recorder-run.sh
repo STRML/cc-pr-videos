@@ -34,8 +34,8 @@ cd "$CWD"
 # Derive repo name and topic slug for output filename
 REPO_NAME=$(basename "$CWD" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g; s/^-//; s/-$//')
 TOPIC_SLUG=$(echo "$PR_TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 ]/ /g' | tr -s ' ' '-' | sed 's/^-//; s/-$//' | cut -c1-40 | sed 's/-$//')
-OUTPUT="$CWD/.claude/videos/pr-${PR_NUM}-${REPO_NAME}-${TOPIC_SLUG}.webm"
-mkdir -p "$CWD/.claude/videos"
+OUTPUT="$CWD/.tmp/pr-videos/pr-${PR_NUM}-${REPO_NAME}-${TOPIC_SLUG}.webm"
+mkdir -p "$CWD/.tmp/pr-videos"
 
 # Read project demo config if it exists
 DEMO_CONFIG=""

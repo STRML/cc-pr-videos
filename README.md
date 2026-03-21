@@ -2,7 +2,7 @@
 
 A Claude Code plugin that automatically records browser demo videos of your pull requests.
 
-When you run `gh pr create`, a background process analyzes your PR, opens the running dev server in a headed browser, interacts with the new feature, and saves a `.webm` recording to your Desktop.
+When you run `gh pr create`, a background process analyzes your PR, opens the running dev server in a headed browser, interacts with the new feature, and saves a `.webm` recording to `.tmp/pr-videos/` in your project.
 
 ## How it works
 
@@ -12,7 +12,7 @@ When you run `gh pr create`, a background process analyzes your PR, opens the ru
    - Check if the PR has user-facing changes (skips backend-only PRs)
    - Authenticate if `.claude/demo.json` has auth config
    - Navigate to the feature and interact with it
-   - Record a < 60s `.webm` video to `.claude/videos/pr-<num>-<repo>-<topic>.webm`
+   - Record a < 60s `.webm` video to `.tmp/pr-videos/pr-<num>-<repo>-<topic>.webm`
 4. A macOS notification fires when the recording is ready
 
 ## Install
@@ -51,7 +51,7 @@ This creates `.claude/demo.json` (auth, base URL, hints) and adds the sentinel f
     "password": "testpass"
   },
   "browserState": ".claude/demo-browser-state.json",
-  "outputDir": ".claude/videos",
+  "outputDir": ".tmp/pr-videos",
   "hints": "The new feature is at /settings/billing"
 }
 ```
@@ -64,7 +64,7 @@ This creates `.claude/demo.json` (auth, base URL, hints) and adds the sentinel f
 | `auth.username` | Login username/email |
 | `auth.password` | Login password |
 | `browserState` | Path to persist browser cookies between recordings |
-| `outputDir` | Where to save recordings (default: `.claude/videos`). Videos are named `pr-{num}-{repo}-{topic}.webm`. |
+| `outputDir` | Where to save recordings (default: `.tmp/pr-videos`). Videos are named `pr-{num}-{repo}-{topic}.webm`. |
 | `hints` | Free-text guidance for the recorder |
 
 ## Feedback loop
